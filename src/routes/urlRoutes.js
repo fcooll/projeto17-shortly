@@ -1,10 +1,12 @@
 import express from "express";
 
 import { validateUrl } from "../middlewares/urlMiddleware.js";
-import { shortenUrl } from "../controllers/urlController.js";
+import { shortenUrl, getUrlId, openShortUrl } from "../controllers/urlController.js";
 
-const router = express.Router();
+const urlRouter = express.Router();
 
-router.post('/urls/shorten', validateUrl, shortenUrl);
+urlRouter.post('/urls/shorten', validateUrl, shortenUrl);
+urlRouter.get('/urls/:id', getUrlId);
+urlRouter.get('/urls/open/:shortUrl', openShortUrl);
 
-export default router;
+export default urlRouter;
