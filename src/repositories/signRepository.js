@@ -12,4 +12,15 @@ async function emailValidate(email){
     return checkEmail.rowCount;
 }
 
-export { insertUser, emailValidate };
+async function consultEmail(email){
+    const emailExist = await connection.query(`SELECT * FROM users WHERE email = $1`, [email]);
+    return emailExist;
+}
+
+async function createToken(userId, token){
+    const newToken = await connection.query(`
+    INSERT INTO sessions ("userId", token) VALUES ($1, $2)`, [userId, token]);
+    return newToken;
+}
+
+export { insertUser, emailValidate, consultEmail, createToken };
